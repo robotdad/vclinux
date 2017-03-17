@@ -120,7 +120,6 @@ function listothers(){
  do
    d=${i%/*}
    d=${d//\//\\}
-   d=${d/./$windir}
    f=${i##*/}
    printf "    <None Include=\"%s\\%s\" />\n" "$d" "$f"
  done
@@ -133,7 +132,6 @@ function listtxt(){
  do
    d=${i%/*}
    d=${d//\//\\}
-   d=${d/./$windir}
    f=${i##*/}
    printf "    <Text Include=\"%s\\%s\" />\n" "$d" "$f"
  done
@@ -146,7 +144,6 @@ function listcompile(){
  do
    d=${i%/*}
    d=${d//\//\\}
-   d=${d/./$windir}
    f=${i##*/}
    printf "    <ClCompile Include=\"%s\\%s\" />\n" "$d" "$f"
  done
@@ -160,7 +157,7 @@ function listinclude(){
  do
    d=${i%/*}
    d=${d//\//\\}
-   d=${d/./$windir}
+   d=${d/.}
    f=${i##*/}
    printf "    <ClInclude Include=\"%s\\%s\" />\n" "$d" "$f"
  done
@@ -169,7 +166,6 @@ function listinclude(){
 
 cd $1 || exit 2;
 touch $2 && test -w $2 || exit 2;
-windir=$3
 printheader > $2
 listothers >> $2
 listtxt >> $2

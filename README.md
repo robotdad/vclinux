@@ -17,11 +17,10 @@ The assumption this script has is that your source code is on a Linux machine an
 Input for this script is:
 1. is the directory of source code to create a project file for
 2. is file name to create, should be projectname.vcxproj
-3. is the root of your Windows fodler where these files will be mapped
 
 Example usage:
 ```
-$ ./genvcxproj.sh ~/repos/preciouscode/ preciouscode.vcxproj Z:
+$ ./genvcxproj.sh ~/repos/preciouscode/ preciouscode.vcxproj
 ```
 
 Once you have your project open in Visual Studio connect to your Linux machine using the extension, [as shown here](https://blogs.msdn.microsoft.com/vcblog/2016/03/30/visual-c-for-linux-development/#consoleapp).
@@ -40,10 +39,8 @@ To generate a project file for your source code see genvcxproj.sh
 
 1. is the directory of source code to create project filters from
 2. is file name to create, should be projectname.vcxproj.filters
-3. is the root of your Windows fodler where these files will be mapped
-
 
 Example usage:
 ```
-$ ./genfilters.sh ~/repos/preciouscode/ preciouscode.vcxproj.filters Z:
+$ ./genfilters.sh ~/repos/preciouscode/ preciouscode.vcxproj.filters
 ```

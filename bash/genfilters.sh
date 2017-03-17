@@ -32,7 +32,7 @@ function listfilters(){
  do
    f=${i##./}
    f=${f//\//\\}
-   uuid="$(cat /proc/sys/kernel/random/uuid)"
+   uuid="$(uuidgen)"
    printf "    <Filter Include=\"%s\">\n" "$f"
    printf "      <UniqueIdentifier>{%s}</UniqueIdentifier>\n" "$uuid"
    printf "    </Filter>\n"
@@ -49,7 +49,6 @@ function listothers(){
    fp=${d##./}
    fp=${fp//\//\\}
    d=${d//\//\\}
-   d=${d/./$windir}
    f=${i##*/}
    if [ $fd = "." ]
    then
@@ -72,7 +71,6 @@ function listtxt(){
    fp=${d##./}
    fp=${fp//\//\\}
    d=${d//\//\\}
-   d=${d/./$windir}
    f=${i##*/}
    if [ $fd = "." ]
    then
@@ -96,7 +94,6 @@ function listcompile(){
    fp=${d##./}
    fp=${fp//\//\\}
    d=${d//\//\\}
-   d=${d/./$windir}
    f=${i##*/}
    if [ $fd = "." ]
    then
@@ -121,7 +118,6 @@ function listinclude(){
    fp=${d##./}
    fp=${fp//\//\\}
    d=${d//\//\\}
-   d=${d/./$windir}
    f=${i##*/}
    if [ $fd = "." ]
    then
@@ -137,7 +133,6 @@ function listinclude(){
 
 cd $1 || exit 2;
 touch $2 && test -w $2 || exit 2;
-windir=$3
 printheader > $2
 listfilters >> $2
 listothers >> $2
