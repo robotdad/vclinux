@@ -42,7 +42,7 @@ function listfilters(){
 
 function listothers(){
  echo "  <ItemGroup>"
- for i in $(find . -not -path '*/\.*' -type f ! -iname "*.c" ! -iname "*.cpp" ! -iname "*.h" ! -iname "*.txt" ! -iname "*.o" ! -iname "*.vcxproj")
+ for i in $(find . -not -path '*/\.*' -type f ! -iname "*.c" ! -iname "*.cpp" ! -iname "*.h" ! -iname "*.hpp" ! -iname "*.txt" ! -iname "*.o" ! -iname "*.vcxproj")
  do
    d=${i%/*}
    fd=${d##*/}
@@ -110,7 +110,7 @@ done
 
 function listinclude(){
  echo "  <ItemGroup>"
- for i in $(find . -not -path '*/\.*' -type f -iname "*.h")
+ for i in $(find . -not -path '*/\.*' -type f -iname "*.h" -or -iname "*.hpp")
  do
    d=${i%/*}
    fd=${d##*/}
@@ -131,6 +131,8 @@ function listinclude(){
  echo "  </ItemGroup>"
 }
 
+OLDIFS=$IFS
+IFS=$'\n'
 cd $1 || exit 2;
 touch $2 && test -w $2 || exit 2;
 printheader > $2
@@ -140,4 +142,5 @@ listtxt >> $2
 listcompile >> $2
 listinclude >> $2
 printfooter >> $2
+IFS=$OLDIFS
 exit

@@ -116,7 +116,7 @@ function printfooter(){
 
 function listothers(){
  echo "  <ItemGroup>"
- for i in $(find . -not -path '*/\.*' -type f ! -iname "*.c" ! -iname "*.cpp" ! -iname "*.h" ! -iname "*.txt" ! -iname "*.o" ! -iname "*.vcxproj" ! -iname "*.filters")
+ for i in $(find . -not -path '*/\.*' -type f ! -iname "*.c" ! -iname "*.cpp" ! -iname "*.h" ! -iname "*.hpp" ! -iname "*.txt" ! -iname "*.o" ! -iname "*.vcxproj" ! -iname "*.filters")
  do
    d=${i%/*}
    d=${d//\//\\}
@@ -153,7 +153,7 @@ function listcompile(){
 
 function listinclude(){
  echo "  <ItemGroup>"
- for i in $(find . -not -path '*/\.*' -type f -iname "*.h")
+ for i in $(find . -not -path '*/\.*' -type f -iname "*.h" -or -iname "*.hpp")
  do
    d=${i%/*}
    d=${d//\//\\}
@@ -163,7 +163,8 @@ function listinclude(){
  done
  echo "  </ItemGroup>"
 }
-
+OLDIFS=$IFS
+IFS=$'\n'
 cd $1 || exit 2;
 touch $2 && test -w $2 || exit 2;
 printheader > $2
@@ -172,4 +173,5 @@ listtxt >> $2
 listcompile >> $2
 listinclude >> $2
 printfooter >> $2
+IFS=$OLDIFS
 exit
