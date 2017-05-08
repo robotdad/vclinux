@@ -15,8 +15,6 @@
 # Usage:
 # $1 is the directory of source code to create a project file for
 # $2 is file name to create, should be projectname.vcxproj
-# $3 is the root of your Windows fodler where these files will be mapped
-# the meat of this is after the printheader/footer functions
 
 function printheader(){
  echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>
@@ -157,7 +155,6 @@ function listinclude(){
  do
    d=${i%/*}
    d=${d//\//\\}
-   d=${d/.}
    f=${i##*/}
    printf "    <ClInclude Include=\"%s\\%s\" />\n" "$d" "$f"
  done

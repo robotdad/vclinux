@@ -14,8 +14,6 @@
 # Usage:
 # $1 is the directory of source code to create project filters from
 # $2 is file name to create, should be projectname.vcxproj.filters
-# $3 is the root of your Windows fodler where these files will be mapped
-# the meat of this is after the printheader/footer functions
 
 function printheader(){
  echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>
