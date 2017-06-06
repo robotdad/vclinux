@@ -157,7 +157,6 @@ function listinclude(){
  do
    d=${i%/*}
    d=${d//\//\\}
-   d=${d/.}
    f=${i##*/}
    printf "    <ClInclude Include=\"%s\\%s\" />\n" "$d" "$f"
  done
