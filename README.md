@@ -44,3 +44,97 @@ Example usage:
 ```
 $ ./genfilters.sh ~/repos/preciouscode/ preciouscode.vcxproj.filters
 ```
+
+
+# Debugging a linux project on Windows
+
+## Prerequisites
+### Windows
+1. Visual Studio 2017
+
+### Linux
+1. Samba
+2. GDB
+3. gdbserver
+4. vclinux(this project)
+5. Target project source
+
+## Steps
+
+We assume the directory structure of target project as follow :
+```
+MyProject
+\
+ |src
+ |  \
+ |   |main.c
+ |   |hello.h
+ |obj
+ |other
+ |Makefile
+```
+
+And We assume that the location of target project and vclinux are both at home directory (~)
+1. Make the target project and run it
+```
+make
+bin\a.out
+```
+2. generate vcxproj
+```
+~\vclinux\bash\genvcxproj.sh ~\MyProject\ MyProject.vcxproj
+```
+3. generate filters
+```
+~\vclinux\bash\genfilters.sh ~\MyProject\ MyProject.vcxproj.filters
+```
+4. copy the headers of dependence to project. we assume that the target project depend with dep.h
+```
+cp dep.h ~\MyProject\deps\
+```
+
+Now, the directory structure of target project becomes as follow:
+```
+MyProject
+\
+ |src
+ |  \
+ |   |main.c
+ |   |hello.h
+ |deps
+ |  \
+ |  |dep.h
+ |MyProject.vcxproj
+ |MyProject.vcxproj.filters
+ |obj
+ |other
+ |Makefile
+ |bin
+ |  \
+ |  |a.out
+```
+
+5. share the directory of target project by samba
+6. open MyProject.vcxproj by Visual Studio 2017 on Windows
+7. set dependence at Visual Studio
+```
+    right click Project->Properties->Configuration Properties->C/C++->IntelliSense->Include Search Path
+  add MyProject/deps folder to it
+```
+
+8. Debugging by Visual Studio 2017 at Windows
+```
+Debug->Attach to Process
+
+Connection Type : SSH
+Connection Target : username@ip
+
+Select the process (a.out) at [Available Processes]
+
+Attach
+```
+
+## Troubleshoot
+
+1. Make sure that you have enough permission to debug target process
+2. Make sure that the version of source is matched with running process
